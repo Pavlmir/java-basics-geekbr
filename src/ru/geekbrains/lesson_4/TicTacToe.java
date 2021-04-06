@@ -6,24 +6,28 @@ import java.util.Scanner;
 public class TicTacToe {
     static void start() {
         char[][] field = createField();
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please input number of points to win...");
+        int pointWin = scanner.nextInt();
         drawField(field);
 
         while (true) {
             doPlayerMove(field);
-            if (isWin(field, 'X') || isDraw(field)) {
+            if (isWin(field, 'X', pointWin) || isDraw(field)) {
                 break;
             }
 
             doAIMove(field);
-            if (isWin(field, 'O') || isDraw(field)) {
+            if (isWin(field, 'O', pointWin) || isDraw(field)) {
                 break;
             }
         }
     }
 
-    static boolean isWin(char[][] field, char sign) {
+    static boolean isWin(char[][] field, char sign, int pointWin) {
         // horizontal
         boolean isWinLine = false;
+        int numb = 0;
         for (int i = 0; i < field.length; i++) { // обходим строки
             isWinLine = true;
             for (int j = 0; j < field[0].length; j++) { // обходим столбцы
@@ -31,13 +35,17 @@ public class TicTacToe {
                     isWinLine = false;
                     break;
                 }
+                else {
+                    numb = numb + 1;
+                }
             }
-            if (isWinLine == true) {
+            if (isWinLine == true || numb == pointWin) {
                 return true;
             }
         }
 
         // vertical
+        numb = 0;
         for (int j = 0; j < field[0].length; j++) { // обходим столбцы
             isWinLine = true;
             for (int i = 0; i < field.length; i++) { // обходим строки
@@ -45,31 +53,42 @@ public class TicTacToe {
                     isWinLine = false;
                     break;
                 }
+                else {
+                    numb = numb + 1;
+                }
             }
-            if (isWinLine == true) {
+            if (isWinLine == true || numb == pointWin) {
                 return true;
             }
         }
 
         // diagonals down
+        numb = 0;
         for (int i = 0; i < field.length; i++) { // обходим строки
             if (field[i][i] != sign) {
                 isWinLine = false;
                 break;
             }
+            else {
+                numb = numb + 1;
+            }
         }
-        if (isWinLine == true) {
+        if (isWinLine == true || numb == pointWin) {
             return true;
         }
 
-        // diagonals down
+        // diagonals up
+        numb = 0;
         for (int i = 0; i < field.length; i++) { // обходим строки
             if (field[i][field.length - i - 1] != sign) {
                 isWinLine = false;
                 break;
             }
+            else {
+                numb = numb + 1;
+            }
         }
-        if (isWinLine == true) {
+        if (isWinLine == true || numb == pointWin) {
             return true;
         }
 
