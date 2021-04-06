@@ -105,8 +105,8 @@ public class TicTacToe {
         int col;
         do {
             System.out.println("Please input coordinates...");
-            row = getCoordinate("row");
-            col = getCoordinate("col");
+            row = getCoordinate("row", field.length);
+            col = getCoordinate("col", field.length);
         } while (isCellOccupied(field, row, col));
 
         field[row][col] = 'X';
@@ -121,24 +121,29 @@ public class TicTacToe {
         return field[row][col] != '-';
     }
 
-    static int getCoordinate(String coordType) {
+    static int getCoordinate(String coordType, int fieldSize) {
         Scanner scanner = new Scanner(System.in);
         int coord;
 
         do {
-            System.out.printf("Please input %s-coordinate [1-3]...%n", coordType);
+            System.out.printf("Please input %s-coordinate [1-%s]...%n", coordType, fieldSize);
             coord = scanner.nextInt() - 1;
-        } while (coord < 0 || coord >= 3);
+        } while (coord < 0 || coord >= fieldSize);
 
         return coord;
     }
 
     static char[][] createField() {
-        return new char[][]{
-                {'-', '-', '-'},
-                {'-', '-', '-'},
-                {'-', '-', '-'}
-        };
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please input size of the field n x n...");
+        int n = scanner.nextInt();
+        char[][] field = new char[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                field[i][j] = '-';
+            }
+        }
+        return field;
     }
 
     static void drawField(char[][] field) {
