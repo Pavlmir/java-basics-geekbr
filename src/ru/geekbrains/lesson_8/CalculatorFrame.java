@@ -35,6 +35,17 @@ public class CalculatorFrame extends JFrame {
         minus.addActionListener(digitButtonActionListener);
         bottomPanel.add(minus);
 
+        JButton multiply = new JButton("*");
+        multiply.addActionListener(digitButtonActionListener);
+        bottomPanel.add(multiply);
+
+        JButton division = new JButton("/");
+        division.addActionListener(digitButtonActionListener);
+        bottomPanel.add(division);
+
+        JButton power = new JButton("^");
+        power.addActionListener(digitButtonActionListener);
+        bottomPanel.add(power);
 
         JButton calc = new JButton("=");
         calc.addActionListener(new CalcActionListener(inputField));
@@ -53,7 +64,6 @@ public class CalculatorFrame extends JFrame {
 
         JButton na = new JButton("N\\A");
         bottomPanel.add(na);
-
 
 
         setVisible(true);
