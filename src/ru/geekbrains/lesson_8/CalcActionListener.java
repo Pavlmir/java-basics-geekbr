@@ -17,19 +17,24 @@ public class CalcActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String text = inputField.getText();
+        Object expResult = new ScriptEngineManager();
+        ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
+        ScriptEngine scriptEngine = scriptEngineManager.getEngineByName("Nashorn");
+        try {
+            expResult = scriptEngine.eval(text);
+        } catch (ScriptException scriptException) {
+            scriptException.printStackTrace();
+        }
+
+        inputField.setText(String.valueOf(expResult));
+    }
+
+    public void actionPerformedSimple(ActionEvent e) {
+        String text = inputField.getText();
         String[] splittedValues;
         int sum = 0;
 
-        if (true) {
-            ScriptEngineManager scriptEngineManager = new ScriptEngineManager();
-            ScriptEngine scriptEngine = scriptEngineManager.getEngineByName("Nashorn");
-            try {
-                Object expResult = scriptEngine.eval(text);
-                sum = (Integer) expResult;
-            } catch (ScriptException scriptException) {
-                scriptException.printStackTrace();
-            }
-        } else if (text.contains("+")) {
+        if (text.contains("+")) {
             splittedValues = text.split("\\+");
             sum = Integer.parseInt(splittedValues[0]) + Integer.parseInt(splittedValues[1]);
         } else if (text.contains("-")) {
@@ -55,4 +60,5 @@ public class CalcActionListener implements ActionListener {
 
         inputField.setText(String.valueOf(sum));
     }
+
 }
